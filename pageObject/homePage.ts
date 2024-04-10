@@ -2,6 +2,9 @@ import { Page } from '@playwright/test'
 
 export default class HomePage {
 
+  //Page body
+  pageBody = this.page.locator('[id="__next"]').first();
+
   //Header
   lightDarkModeSwitch = this.page.locator('//header//label');
 
@@ -14,4 +17,7 @@ export default class HomePage {
     this.page = page;
   };
 
+  async changeSiteModeDarkLight() {
+    await this.lightDarkModeSwitch.click();
+  };
 };
