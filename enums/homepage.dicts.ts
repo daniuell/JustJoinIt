@@ -22,3 +22,8 @@ export enum Category {
     Support = "support",
     Erp = "erp",
 }
+
+export enum HomepageBackgroundColors {
+    Light = "rgb(255, 255, 255)",
+    Dark = "rgb(44, 44, 44)"
+}
