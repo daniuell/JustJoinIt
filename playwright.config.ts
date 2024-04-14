@@ -12,7 +12,7 @@ export default defineConfig({
 
     trace: 'on-first-retry',
     baseURL: "https://justjoin.it",
-    headless: false,
+    headless: true,
     viewport: { width: 1920, height: 1080 },
   },
 
