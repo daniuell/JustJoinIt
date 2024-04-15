@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import test from '../fixtures/basePage.fixture'
-import { generateRandomSalary } from '../tools/tools';
-import { SelectEmployment, SelectExperience, SelectTypeOfWork } from '../enums/moreFilters.dicts';
+import { generateRandomSalary } from '../tools/utils';
+import { SelectEmployment, SelectExperience, SelectTypeOfWork } from '../enums/moreFilters';
 
 test.describe('More filters tests', () => {
 
