@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import test from '../fixtures/basePage.fixture'
-import { HomepageBackgroundColors } from '../enums/homepage.dicts';
+import { HomepageBackgroundColors } from '../enums/homepage';
 
 test.describe('Cookies test', () => {
 
