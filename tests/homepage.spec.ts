@@ -56,9 +56,9 @@ test.describe('Cookies test', () => {
 
         await homepage.sortOffersDropDownButton.click();
 
-        await expect(homepage.dropDownLatest).toBeInViewport();
+        await expect(homepage.dropDownHighestSalary).toBeInViewport();
 
-        await homepage.dropDownLatest.click();
+        await homepage.dropDownHighestSalary.click();
 
         await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Highest);
     });
@@ -68,9 +68,9 @@ test.describe('Cookies test', () => {
 
         await homepage.sortOffersDropDownButton.click();
 
-        await expect(homepage.dropDownLatest).toBeInViewport();
+        await expect(homepage.dropDownLowestSalary).toBeInViewport();
 
-        await homepage.dropDownLatest.click();
+        await homepage.dropDownLowestSalary.click();
 
         await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Lowest);
     });
