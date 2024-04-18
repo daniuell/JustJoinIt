@@ -1,6 +1,7 @@
 import { expect } from '@playwright/test';
 import test from '../fixtures/basePage.fixture'
 import { DropdownValues, HomepageBackgroundColors } from '../enums/homepage';
+import { TopCitiesPoland, CitiesRelatedToSilesia, CitiesRelatedToTricity } from '../enums/locationForm';
 
 test.describe('Cookies test', () => {
 
@@ -74,4 +75,48 @@ test.describe('Cookies test', () => {
 
         await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Lowest);
     });
+    test('The user can sort job offers by the most popular cities in poland', async ({ homepage, locationViews, page, moreFilterViews }) => {
+
+        const randomCity = await moreFilterViews.randomProperty(TopCitiesPoland);
+
+        await homepage.location.click();
+        await locationViews.selectCityFromFilter(randomCity);
+        await locationViews.showOffersButton.click();
+        await page.waitForLoadState('networkidle');
+
+        await expect(homepage.workInTitle).toBeInViewport();
+        await expect(homepage.workInCity(randomCity)).toBeInViewport();
+
+        const countJobOffer = await homepage.offerCityCount.count();
+
+        if (randomCity === TopCitiesPoland.Silesia) {
+
+            for (let i = 1; i < countJobOffer; i++) {
+
+                const cities = Object.values(CitiesRelatedToSilesia) as string[];
+                const cityValueFromPage = await homepage.offerCity(i).textContent();
+                const result = await homepage.locatorValueContainsCityFromEnum(cityValueFromPage, cities);
+
+                expect(result).toBe(true);
+            };
+        }
+        else if (randomCity === TopCitiesPoland.Tricity) {
+
+            for (let i = 1; i < countJobOffer; i++) {
+
+                const cities = Object.values(CitiesRelatedToTricity) as string[];
+                const cityValueFromPage = await homepage.offerCity(i).textContent();
+                const result = await homepage.locatorValueContainsCityFromEnum(cityValueFromPage, cities);
+
+                expect(result).toBe(true);
+            };
+        }
+        else {
+            for (let i = 1; i < countJobOffer; i++) {
+                await expect(homepage.offerCity(i)).toContainText(randomCity);
+            };
+        }
+
+    });
+
 });

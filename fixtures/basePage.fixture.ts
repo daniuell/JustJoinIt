@@ -4,11 +4,11 @@ import CookiesViews from '../pageObject/views/cookiesViews';
 
 import { test as baseTest } from '@playwright/test';
 import MoreFilterViews from '../pageObject/views/moreFilterViews';
+import LocationViews from '../pageObject/views/locationViews';
 
 const test = baseTest.extend<{
 
   homepage: HomePage;
-
 
   //Components
   headerComponent: HeaderComponent;
@@ -16,10 +16,16 @@ const test = baseTest.extend<{
   //Views
   moreFilterViews: MoreFilterViews;
   cookiesViews: CookiesViews;
+  locationViews: LocationViews;
 
 }>({
   homepage: async ({ page }, use) => {
     await use(new HomePage(page))
+  },
+
+  //Components
+  headerComponent: async ({ page }, use) => {
+    await use(new HeaderComponent(page))
   },
 
   //Views
@@ -29,10 +35,8 @@ const test = baseTest.extend<{
   moreFilterViews: async ({ page }, use) => {
     await use(new MoreFilterViews(page))
   },
-
-  //Components
-  headerComponent: async ({ page }, use) => {
-    await use(new HeaderComponent(page))
+  locationViews: async ({ page }, use) => {
+    await use(new LocationViews(page))
   },
 });
 
