@@ -27,3 +27,10 @@ export enum HomepageBackgroundColors {
     Light = "rgb(255, 255, 255)",
     Dark = "rgb(44, 44, 44)"
 }
+
+export enum DropdownValues {
+    Default = "Default",
+    Latest = "Latest",
+    Highest = "Highest salary",
+    Lowest = "Lowest salary"
+}
