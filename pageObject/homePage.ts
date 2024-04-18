@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test'
-import { request } from 'http';
+import { CitiesRelatedToSilesia } from '../enums/locationForm';
 
 export default class HomePage {
 
@@ -11,7 +11,7 @@ export default class HomePage {
 
   //Search and filter
   searchBar = this.page.locator('[placeholder="Search"]');
-  location = this.page.getByRole('button', { name: "Location" });
+  location = this.page.locator('[name="location_filter_button"]');
   moreFiltersButton = this.page.locator('[name="more_filters_button"]');
   selectCategory(category: string) { return this.page.locator(`//div[contains(@class,"MuiBox")]//*[contains(@href,"${category}")]`) };
 
@@ -20,6 +20,11 @@ export default class HomePage {
   allOffersButton = this.page.locator('//button[contains(@id,"-allOffers")]');
   remoteOnlySwitchOn = this.page.locator('//span[contains(@class,"MuiSwitch-sizeSmall")]//input[@type="checkbox"]');
   remoteOnlySwitchOff = this.page.locator('//span[contains(@class,"Mui-checked")]');
+
+  offerCityCount = this.page.locator('//*[@data-testid="PlaceOutlinedIcon"]//..//div/span[1]');
+  offerCity(index: number) { return this.page.locator(`(//*[@data-testid="PlaceOutlinedIcon"]//..//div/span[1])[${index}]`) };
+  workInTitle = this.page.locator("//div[contains(@class,'MuiBox-root')]//span[text()='Work: ']")
+  workInCity(city: string) { return this.page.locator(`//div[contains(@class,"MuiBox-root")]//span[text()="Work: "]//following-sibling::span[text()="${city}"]`) };
 
   //Drop-down filter 
   sortOffersDropDownButton = this.page.locator('[name="sort_filter_button"]');
@@ -40,4 +45,11 @@ export default class HomePage {
   async openMoreFilterViews() {
     await this.moreFiltersButton.click();
   };
+
+  async locatorValueContainsCityFromEnum(city: string | null, valuesFromEnum: string[]) {
+    if (city === null || city === undefined) {
+      return false;
+    };
+    return valuesFromEnum.some(value => city.includes(value));
+  }
 };

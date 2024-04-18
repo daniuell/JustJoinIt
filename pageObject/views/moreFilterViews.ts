@@ -1,6 +1,5 @@
-
-import { Locator, Page } from '@playwright/test'
-import { SelectEmployment, SelectExperience, SelectTypeOfWork } from '../../enums/moreFilters.dicts';
+import { Page } from '@playwright/test'
+import { SelectEmployment, SelectExperience, SelectTypeOfWork } from '../../enums/moreFilters';
 
 export default class MoreFilterViews {
 
