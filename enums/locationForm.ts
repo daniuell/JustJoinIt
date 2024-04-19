@@ -1,9 +1,9 @@
 export enum TopCitiesPoland {
-	Cracow = "Kraków",
 	Silesia = "Śląsk",
 	Tricity = "Trójmiasto",
 	Warsaw = "Warszawa",
-	Wroclaw = "Wrocław"
+	Wroclaw = "Wrocław",
+	Cracow = "Kraków"
 }
 export enum CitiesRelatedToSilesia {
 	Katowice = "Katowice",

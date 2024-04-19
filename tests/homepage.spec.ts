@@ -90,33 +90,17 @@ test.describe('Cookies test', () => {
         const countJobOffer = await homepage.offerCityCount.count();
 
         if (randomCity === TopCitiesPoland.Silesia) {
-
-            for (let i = 1; i < countJobOffer; i++) {
-
-                const cities = Object.values(CitiesRelatedToSilesia) as string[];
-                const cityValueFromPage = await homepage.offerCity(i).textContent();
-                const result = await homepage.locatorValueContainsCityFromEnum(cityValueFromPage, cities);
-
-                expect(result).toBe(true);
-            };
+            expect(await homepage.checkMultiCitiesLocators(countJobOffer, Object.values(CitiesRelatedToSilesia))).toBe(true);
         }
+
         else if (randomCity === TopCitiesPoland.Tricity) {
-
-            for (let i = 1; i < countJobOffer; i++) {
-
-                const cities = Object.values(CitiesRelatedToTricity) as string[];
-                const cityValueFromPage = await homepage.offerCity(i).textContent();
-                const result = await homepage.locatorValueContainsCityFromEnum(cityValueFromPage, cities);
-
-                expect(result).toBe(true);
-            };
+            expect(await homepage.checkMultiCitiesLocators(countJobOffer, Object.values(CitiesRelatedToTricity))).toBe(true);
         }
         else {
             for (let i = 1; i < countJobOffer; i++) {
                 await expect(homepage.offerCity(i)).toContainText(randomCity);
             };
         }
-
     });
 
 });
