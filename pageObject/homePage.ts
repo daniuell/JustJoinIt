@@ -46,10 +46,28 @@ export default class HomePage {
     await this.moreFiltersButton.click();
   };
 
+  async checkMultiCitiesLocators(counter: number, citiesFromEnum: string[]) {
+
+    const cityValueFromPage: boolean[] = [];
+
+    for (let i = 1; i < counter; i++) {
+
+      const cities = Object.values(citiesFromEnum) as string[];
+      const cityFromPage = (await this.offerCity(i).textContent());
+      const result = await this.locatorValueContainsCityFromEnum(cityFromPage, cities);
+      cityValueFromPage.push(result);
+    };
+    return this.allElementsAreTrue(cityValueFromPage);
+  };
+
   async locatorValueContainsCityFromEnum(city: string | null, valuesFromEnum: string[]) {
     if (city === null || city === undefined) {
       return false;
     };
     return valuesFromEnum.some(value => city.includes(value));
-  }
+  };
+
+  async allElementsAreTrue(array: boolean[]) {
+    return array.every(value => value === true);
+  };
 };
