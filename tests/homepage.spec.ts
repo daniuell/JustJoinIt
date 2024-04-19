@@ -75,6 +75,7 @@ test.describe('Cookies test', () => {
 
         await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Lowest);
     });
+
     test('The user can sort job offers by the most popular cities in poland', async ({ homepage, locationViews, page, moreFilterViews }) => {
 
         const randomCity = await moreFilterViews.randomProperty(TopCitiesPoland);
@@ -84,23 +85,21 @@ test.describe('Cookies test', () => {
         await locationViews.showOffersButton.click();
         await page.waitForLoadState('networkidle');
 
-        await expect(homepage.workInTitle).toBeInViewport();
-        await expect(homepage.workInCity(randomCity)).toBeInViewport();
+        await expect(homepage.offerMenuWorkTitle).toBeInViewport();
+        await expect(homepage.offerMenuWorkInCity(randomCity)).toBeInViewport();
 
         const countJobOffer = await homepage.offerCityCount.count();
 
         if (randomCity === TopCitiesPoland.Silesia) {
-            expect(await homepage.checkMultiCitiesLocators(countJobOffer, Object.values(CitiesRelatedToSilesia))).toBe(true);
+            expect(await homepage.checkMultiCitiesFromOffers(countJobOffer, Object.values(CitiesRelatedToSilesia))).toBe(true);
         }
 
         else if (randomCity === TopCitiesPoland.Tricity) {
-            expect(await homepage.checkMultiCitiesLocators(countJobOffer, Object.values(CitiesRelatedToTricity))).toBe(true);
+            expect(await homepage.checkMultiCitiesFromOffers(countJobOffer, Object.values(CitiesRelatedToTricity))).toBe(true);
         }
         else {
-            for (let i = 1; i < countJobOffer; i++) {
-                await expect(homepage.offerCity(i)).toContainText(randomCity);
-            };
+            expect(await homepage.checkSingleCitiesFromOffers(countJobOffer, randomCity)).toBe(true);
+
         }
     });
-
 });
