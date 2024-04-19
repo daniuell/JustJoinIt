@@ -23,8 +23,8 @@ export default class HomePage {
 
   offerCityCount = this.page.locator('//*[@data-testid="PlaceOutlinedIcon"]//..//div/span[1]');
   offerCity(index: number) { return this.page.locator(`(//*[@data-testid="PlaceOutlinedIcon"]//..//div/span[1])[${index}]`) };
-  workInTitle = this.page.locator("//div[contains(@class,'MuiBox-root')]//span[text()='Work: ']")
-  workInCity(city: string) { return this.page.locator(`//div[contains(@class,"MuiBox-root")]//span[text()="Work: "]//following-sibling::span[text()="${city}"]`) };
+  offerMenuWorkTitle = this.page.locator("//div[contains(@class,'MuiBox-root')]//span[text()='Work: ']")
+  offerMenuWorkInCity(city: string) { return this.page.locator(`//div[contains(@class,"MuiBox-root")]//span[text()="Work: "]//following-sibling::span[text()="${city}"]`) };
 
   //Drop-down filter 
   sortOffersDropDownButton = this.page.locator('[name="sort_filter_button"]');
@@ -46,18 +46,29 @@ export default class HomePage {
     await this.moreFiltersButton.click();
   };
 
-  async checkMultiCitiesLocators(counter: number, citiesFromEnum: string[]) {
+  async checkSingleCitiesFromOffers(counter: number, randomCity: string) {
 
     const cityValueFromPage: boolean[] = [];
 
     for (let i = 1; i < counter; i++) {
+      const cityFromPage = (await this.offerCity(i).textContent());
+      const result = cityFromPage === randomCity;
+      cityValueFromPage.push(result);
+    };
+    return await this.allElementsAreTrue(cityValueFromPage);
+  };
 
+  async checkMultiCitiesFromOffers(counter: number, citiesFromEnum: string[]) {
+
+    const cityValueFromPage: boolean[] = [];
+
+    for (let i = 1; i < counter; i++) {
       const cities = Object.values(citiesFromEnum) as string[];
       const cityFromPage = (await this.offerCity(i).textContent());
       const result = await this.locatorValueContainsCityFromEnum(cityFromPage, cities);
       cityValueFromPage.push(result);
     };
-    return this.allElementsAreTrue(cityValueFromPage);
+    return await this.allElementsAreTrue(cityValueFromPage);
   };
 
   async locatorValueContainsCityFromEnum(city: string | null, valuesFromEnum: string[]) {
