@@ -1,17 +1,10 @@
-import { Page } from '@playwright/test'
+import { Page, Browser } from '@playwright/test'
 
 export default class BasePage {
   readonly page: Page;
 
   constructor(page: Page) {
     this.page = page;
-  };
-
-  async newCardHandling({ page }) {
-    const pagePromise = page.waitForEvent('popup');
-    const newPage = await pagePromise;
-    await newPage.setViewportSize({ width: 1920, height: 1000 });
-    await newPage.waitForLoadState();
   };
 
   async isLoaded(elements): Promise<boolean> {

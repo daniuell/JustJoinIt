@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test'
-import { SelectEmployment, SelectExperience, SelectTypeOfWork } from '../../enums/moreFilters';
+import { SelectEmployment, SelectExperience, SelectTypeOfWork } from '../../../enums/moreFilters';
 
 export default class MoreFilterViews {
 

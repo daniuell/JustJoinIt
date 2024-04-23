@@ -13,7 +13,7 @@ test.describe('Cookies test', () => {
 
     test('Id = 1 | Header elements visibility', async ({ headerComponent }) => {
 
-        const locators = [headerComponent.companyLogo, headerComponent.lightDarkModeSwitch, headerComponent.jobOffers, headerComponent.topCompanies, headerComponent.geek, headerComponent.postAJobButton, headerComponent.signInButton, headerComponent.jobAlertButton, headerComponent.currencyDropDownButton, headerComponent.sideMenuIcon];
+        const locators = [headerComponent.companyLogo, headerComponent.lightDarkModeSwitch, headerComponent.jobOffersButton, headerComponent.topCompaniesButton, headerComponent.geekButton, headerComponent.postAJobButton, headerComponent.signInButton, headerComponent.jobAlertButton, headerComponent.currencyDropDownButton, headerComponent.sideMenuIcon];
 
         expect(await headerComponent.isLoaded(locators)).toBe(true);
     });
@@ -24,6 +24,47 @@ test.describe('Cookies test', () => {
         await headerComponent.changeSiteModeDarkLight();
 
         await expect(headerComponent.headerBackground).toHaveCSS('background-color', HomepageBackgroundColors.Dark);
+    });
+    test('Id = 3 | Job offers button takes the user to the offers page', async ({ headerComponent, page }) => {
+
+        await headerComponent.jobOffersButton.click();
+        await headerComponent.waitForPageToLoad();
+
+        await expect(page).toHaveURL('');
+    });
+    test('Id = 4 | Top Companies button takes you to the top companies page', async ({ headerComponent, page }) => {
+
+        await headerComponent.topCompaniesButton.click();
+        await headerComponent.waitForPageToLoad();
+
+        await expect(page).toHaveURL(/brands/);
+    });
+    test('Id = 5 | The geekButton button takes you to the blog', async ({ headerComponent, page }) => {
+
+        await headerComponent.geekButton.click();
+
+        const [newPage] = await Promise.all([
+            await page.waitForEvent('popup'),
+            await page.setViewportSize({ width: 1920, height: 1000 }),
+            await page.waitForLoadState(),
+        ]);
+
+        await expect(newPage).toHaveURL('https://geek.justjoin.it');
+    });
+    test('Id = 6 | The Post a job button takes the user to the page with the prices for the publication of offers', async ({ headerComponent, page }) => {
+
+        await headerComponent.postAJobButton.click();
+        await headerComponent.waitForPageToLoad();
+
+        await expect(page).toHaveURL(/pricing/);
+    });
+    test('Id = 7 | The Sign in button opens a drop-down menu with two options', async ({ headerComponent, signInViews }) => {
+
+        await headerComponent.signInButton.click();
+
+        await expect(signInViews.signInDropDownMenu).toBeInViewport();
+        await expect(signInViews.signInCandidateButton).toBeInViewport();
+        await expect(signInViews.signInEmployerButton).toBeInViewport();
     });
     test('ID = 14 | The user can sort job offers by the most popular cities in poland', async ({ homepage, locationViews, page, moreFilterViews }) => {
 
