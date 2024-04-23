@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test'
 import { CitiesRelatedToSilesia } from '../enums/locationForm';
+import { Category } from '../enums/homepage';
 
 export default class HomePage {
 
@@ -13,7 +14,8 @@ export default class HomePage {
   searchBar = this.page.locator('[placeholder="Search"]');
   location = this.page.locator('[name="location_filter_button"]');
   moreFiltersButton = this.page.locator('[name="more_filters_button"]');
-  selectCategory(category: string) { return this.page.locator(`//div[contains(@class,"MuiBox")]//*[contains(@href,"${category}")]`) };
+  selectCategory(category: string) { return this.page.locator(`//div[contains(@class,"MuiBox")]//a[contains(@href,"${category}") and contains(@class,"offer_list_category_link")]`).last() };
+  countCategory = this.page.locator('//a[contains(@class,"offer_list_category_link")]');
 
   //Offers 
   offersWithSalaryButton = this.page.getByRole('button', { name: "Offers with salary" });
@@ -46,11 +48,11 @@ export default class HomePage {
     await this.moreFiltersButton.click();
   };
 
-  async checkSingleCitiesFromOffers(counter: number, randomCity: string) {
+  async checkSingleCitiesFromOffers(count: number, randomCity: string) {
 
     const cityValueFromPage: boolean[] = [];
 
-    for (let i = 1; i < counter; i++) {
+    for (let i = 1; i < count; i++) {
       const cityFromPage = (await this.offerCity(i).textContent());
       const result = cityFromPage === randomCity;
       cityValueFromPage.push(result);
@@ -58,11 +60,11 @@ export default class HomePage {
     return await this.allElementsAreTrue(cityValueFromPage);
   };
 
-  async checkMultiCitiesFromOffers(counter: number, citiesFromEnum: string[]) {
+  async checkMultiCitiesFromOffers(count: number, citiesFromEnum: string[]) {
 
     const cityValueFromPage: boolean[] = [];
 
-    for (let i = 1; i < counter; i++) {
+    for (let i = 1; i < count; i++) {
       const cities = Object.values(citiesFromEnum) as string[];
       const cityFromPage = (await this.offerCity(i).textContent());
       const result = await this.locatorValueContainsCityFromEnum(cityFromPage, cities);

@@ -21,6 +21,8 @@ export enum Category {
     Go = "go",
     Support = "support",
     Erp = "erp",
+    Architecture = "architecture",
+    Other = "other"
 }
 
 export enum HomepageBackgroundColors {
