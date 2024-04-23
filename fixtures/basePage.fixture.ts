@@ -3,9 +3,10 @@ import HomePage from '../pageObject/homePage';
 import CookiesViews from '../pageObject/views/cookiesViews';
 
 import { test as baseTest } from '@playwright/test';
-import MoreFilterViews from '../pageObject/views/moreFilterViews';
-import LocationViews from '../pageObject/views/locationViews';
+import MoreFilterViews from '../pageObject/views/filter/moreFilterViews';
+import LocationViews from '../pageObject/views/filter/locationViews';
 import BasePage from '../pageObject/basePage';
+import SignInViews from '../pageObject/views/header/signInViews';
 
 const test = baseTest.extend<{
 
@@ -19,6 +20,7 @@ const test = baseTest.extend<{
   moreFilterViews: MoreFilterViews;
   cookiesViews: CookiesViews;
   locationViews: LocationViews;
+  signInViews: SignInViews;
 
 }>({
   basePage: async ({ page }, use) => {
@@ -42,6 +44,9 @@ const test = baseTest.extend<{
   },
   locationViews: async ({ page }, use) => {
     await use(new LocationViews(page))
+  },
+  signInViews: async ({ page }, use) => {
+    await use(new SignInViews(page))
   },
 });
 
