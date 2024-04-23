@@ -20,8 +20,7 @@
     ```sh
    npx playwright test
    ```
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+    
 ### Test cases
 Tests are created based on test cases, which can be found here : 
  ```sh
