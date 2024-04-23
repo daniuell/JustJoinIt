@@ -3,7 +3,7 @@ import test from '../fixtures/basePage.fixture'
 import { Category, DropdownValues, HomepageBackgroundColors } from '../enums/homepage';
 import { TopCitiesPoland, CitiesRelatedToSilesia, CitiesRelatedToTricity } from '../enums/locationForm';
 
-test.describe('Cookies test', () => {
+test.describe('Test cases based on excel file', () => {
 
     test.beforeEach(async ({ page, cookiesViews }) => {
         await page.goto('');
