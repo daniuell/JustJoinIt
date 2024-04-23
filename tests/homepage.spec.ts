@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import test from '../fixtures/basePage.fixture'
-import { DropdownValues, HomepageBackgroundColors } from '../enums/homepage';
+import { Category, DropdownValues, HomepageBackgroundColors } from '../enums/homepage';
 import { TopCitiesPoland, CitiesRelatedToSilesia, CitiesRelatedToTricity } from '../enums/locationForm';
 
 test.describe('Cookies test', () => {
@@ -75,6 +75,15 @@ test.describe('Cookies test', () => {
 
         await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Lowest);
     });
+    test('The user can see all offer category from menu', async ({ homepage }) => {
+
+        const countCategories = await homepage.countCategory.count();
+        const categories = Object.values(Category);
+
+        for (let i = 1; i < countCategories; i++) {
+            await expect(homepage.selectCategory(categories[i])).toBeInViewport();
+        };
+    });
 
     test('The user can sort job offers by the most popular cities in poland', async ({ homepage, locationViews, page, moreFilterViews }) => {
 
@@ -93,13 +102,11 @@ test.describe('Cookies test', () => {
         if (randomCity === TopCitiesPoland.Silesia) {
             expect(await homepage.checkMultiCitiesFromOffers(countJobOffer, Object.values(CitiesRelatedToSilesia))).toBe(true);
         }
-
         else if (randomCity === TopCitiesPoland.Tricity) {
             expect(await homepage.checkMultiCitiesFromOffers(countJobOffer, Object.values(CitiesRelatedToTricity))).toBe(true);
         }
         else {
             expect(await homepage.checkSingleCitiesFromOffers(countJobOffer, randomCity)).toBe(true);
-
         }
     });
 });
