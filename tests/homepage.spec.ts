@@ -8,13 +8,20 @@ test.describe('Cookies test', () => {
     test.beforeEach(async ({ page, cookiesViews }) => {
         await page.goto('');
         await cookiesViews.acceptCookies();
+        await cookiesViews.waitForPageToLoad();
     });
 
-    test('Id = 2 | Change site mode from light to dark', async ({ homepage, headerComponent }) => {
+    test('Id = 1 | Header elements visibility', async ({ headerComponent }) => {
+
+        const locators = [headerComponent.companyLogo, headerComponent.lightDarkModeSwitch, headerComponent.jobOffers, headerComponent.topCompanies, headerComponent.geek, headerComponent.postAJobButton, headerComponent.signInButton, headerComponent.jobAlertButton, headerComponent.currencyDropDownButton, headerComponent.sideMenuIcon];
+
+        expect(await headerComponent.isLoaded(locators)).toBe(true);
+    });
+    test('Id = 2 | Change site mode from light to dark', async ({ headerComponent }) => {
 
         await expect(headerComponent.headerBackground).toHaveCSS('background-color', HomepageBackgroundColors.Light);
 
-        await homepage.changeSiteModeDarkLight();
+        await headerComponent.changeSiteModeDarkLight();
 
         await expect(headerComponent.headerBackground).toHaveCSS('background-color', HomepageBackgroundColors.Dark);
     });
