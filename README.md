@@ -21,3 +21,9 @@
    npx playwright test
    ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Test cases
+Tests are created based on test cases, which can be found here : 
+ ```sh
+   https://docs.google.com/spreadsheets/d/1Z__giRzQ0Llr5zOLupV1AVBjPv4-cRDWdTm1DtP5WJU/edit?usp=sharing
+ ```
