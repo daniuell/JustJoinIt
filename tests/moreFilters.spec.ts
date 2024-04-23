@@ -13,7 +13,7 @@ test.describe('More filters tests', () => {
 
     });
 
-    test('Fill all more filters options', async ({ moreFilterViews }) => {
+    test('ID = 18 | Fill all more filters options', async ({ moreFilterViews }) => {
 
         const salaryMin = generateRandomSalary(4);
         const salaryMax = generateRandomSalary(5);
@@ -29,7 +29,7 @@ test.describe('More filters tests', () => {
         await expect(moreFilterViews.salaryMinInput).toHaveValue(salaryMin);
         await expect(moreFilterViews.friendlyOfferTurnedOff).toBeInViewport();
 
-         
+
         await moreFilterViews.checkFriendlyOffer();
 
         await expect(moreFilterViews.friendlyOfferTurnedOn).toBeInViewport();

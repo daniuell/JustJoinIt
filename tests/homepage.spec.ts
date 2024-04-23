@@ -10,7 +10,7 @@ test.describe('Cookies test', () => {
         await cookiesViews.acceptCookies();
     });
 
-    test('Change site mode from light to dark', async ({ homepage, headerComponent }) => {
+    test('Id = 2 | Change site mode from light to dark', async ({ homepage, headerComponent }) => {
 
         await expect(headerComponent.headerBackground).toHaveCSS('background-color', HomepageBackgroundColors.Light);
 
@@ -18,74 +18,7 @@ test.describe('Cookies test', () => {
 
         await expect(headerComponent.headerBackground).toHaveCSS('background-color', HomepageBackgroundColors.Dark);
     });
-    test('The user can filter offers with operating mode - remote', async ({ homepage }) => {
-
-        await homepage.remoteOnlySwitchOn.click();
-
-        await expect(homepage.remoteOnlySwitchOff).toBeInViewport();
-
-        await homepage.remoteOnlySwitchOff.click();
-
-        await expect(homepage.remoteOnlySwitchOn).toBeInViewport();
-    });
-    test('The user can click drop-down filter and can see 4 options', async ({ homepage }) => {
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
-
-        await homepage.sortOffersDropDownButton.click();
-
-        await expect(homepage.dropDownDefault).toBeInViewport();
-        await expect(homepage.dropDownLatest).toBeInViewport();
-        await expect(homepage.dropDownHighestSalary).toBeInViewport();
-        await expect(homepage.dropDownLowestSalary).toBeInViewport();
-    });
-    test('The user can filter offers by latest one', async ({ homepage }) => {
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
-
-        await homepage.sortOffersDropDownButton.click();
-
-        await expect(homepage.dropDownLatest).toBeInViewport();
-
-        await homepage.dropDownLatest.click();
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Latest);
-    });
-    test('The user can filter offers by highest salary', async ({ homepage }) => {
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
-
-        await homepage.sortOffersDropDownButton.click();
-
-        await expect(homepage.dropDownHighestSalary).toBeInViewport();
-
-        await homepage.dropDownHighestSalary.click();
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Highest);
-    });
-    test('The user can filter offers by lowest salary', async ({ homepage }) => {
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
-
-        await homepage.sortOffersDropDownButton.click();
-
-        await expect(homepage.dropDownLowestSalary).toBeInViewport();
-
-        await homepage.dropDownLowestSalary.click();
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Lowest);
-    });
-    test('The user can see all offer category from menu', async ({ homepage }) => {
-
-        const countCategories = await homepage.countCategory.count();
-        const categories = Object.values(Category);
-
-        for (let i = 1; i < countCategories; i++) {
-            await expect(homepage.selectCategory(categories[i])).toBeInViewport();
-        };
-    });
-
-    test('The user can sort job offers by the most popular cities in poland', async ({ homepage, locationViews, page, moreFilterViews }) => {
+    test('ID = 14 | The user can sort job offers by the most popular cities in poland', async ({ homepage, locationViews, page, moreFilterViews }) => {
 
         const randomCity = await moreFilterViews.randomProperty(TopCitiesPoland);
 
@@ -108,5 +41,71 @@ test.describe('Cookies test', () => {
         else {
             expect(await homepage.checkSingleCitiesFromOffers(countJobOffer, randomCity)).toBe(true);
         }
+    });
+    test('ID = 17 | The user can see all offer category from menu', async ({ homepage }) => {
+
+        const countCategories = await homepage.countCategory.count();
+        const categories = Object.values(Category);
+
+        for (let i = 1; i < countCategories; i++) {
+            await expect(homepage.selectCategory(categories[i])).toBeInViewport();
+        };
+    });
+    test('ID = 21 | The user can filter offers with operating mode - remote', async ({ homepage }) => {
+
+        await homepage.remoteOnlySwitchOn.click();
+
+        await expect(homepage.remoteOnlySwitchOff).toBeInViewport();
+
+        await homepage.remoteOnlySwitchOff.click();
+
+        await expect(homepage.remoteOnlySwitchOn).toBeInViewport();
+    });
+    test('ID = 22 | The user can click drop-down filter and can see 4 options', async ({ homepage }) => {
+
+        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
+
+        await homepage.sortOffersDropDownButton.click();
+
+        await expect(homepage.dropDownDefault).toBeInViewport();
+        await expect(homepage.dropDownLatest).toBeInViewport();
+        await expect(homepage.dropDownHighestSalary).toBeInViewport();
+        await expect(homepage.dropDownLowestSalary).toBeInViewport();
+    });
+    test('ID = 22 different option | The user can filter offers by latest one', async ({ homepage }) => {
+
+        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
+
+        await homepage.sortOffersDropDownButton.click();
+
+        await expect(homepage.dropDownLatest).toBeInViewport();
+
+        await homepage.dropDownLatest.click();
+
+        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Latest);
+    });
+    test('ID = 22 different option | The user can filter offers by highest salary', async ({ homepage }) => {
+
+        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
+
+        await homepage.sortOffersDropDownButton.click();
+
+        await expect(homepage.dropDownHighestSalary).toBeInViewport();
+
+        await homepage.dropDownHighestSalary.click();
+
+        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Highest);
+    });
+    test('ID = 22 different option | The user can filter offers by lowest salary', async ({ homepage }) => {
+
+        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
+
+        await homepage.sortOffersDropDownButton.click();
+
+        await expect(homepage.dropDownLowestSalary).toBeInViewport();
+
+        await homepage.dropDownLowestSalary.click();
+
+        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Lowest);
     });
 });
