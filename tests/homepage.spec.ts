@@ -8,7 +8,7 @@ test.describe('Test cases based on excel file', () => {
     test.beforeEach(async ({ page, cookiesViews }) => {
         await page.goto('');
         await cookiesViews.acceptCookies();
-        await cookiesViews.waitForPageToLoad();
+        await page.waitForLoadState();
     });
 
     test('Id = 1 | Header elements visibility', async ({ headerComponent }) => {
