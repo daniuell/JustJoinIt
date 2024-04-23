@@ -1,14 +1,9 @@
 import { Page } from '@playwright/test'
-import { CitiesRelatedToSilesia } from '../enums/locationForm';
-import { Category } from '../enums/homepage';
 
 export default class HomePage {
 
   //Page body
   pageBody = this.page.locator('[id="__next"]').first();
-
-  //Header
-  lightDarkModeSwitch = this.page.locator('//header//label');
 
   //Search and filter
   searchBar = this.page.locator('[placeholder="Search"]');
@@ -38,10 +33,6 @@ export default class HomePage {
 
   constructor(private page: Page) {
     this.page = page;
-  };
-
-  async changeSiteModeDarkLight() {
-    await this.lightDarkModeSwitch.click();
   };
 
   async openMoreFilterViews() {

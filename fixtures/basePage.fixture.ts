@@ -5,9 +5,11 @@ import CookiesViews from '../pageObject/views/cookiesViews';
 import { test as baseTest } from '@playwright/test';
 import MoreFilterViews from '../pageObject/views/moreFilterViews';
 import LocationViews from '../pageObject/views/locationViews';
+import BasePage from '../pageObject/basePage';
 
 const test = baseTest.extend<{
 
+  basePage: BasePage;
   homepage: HomePage;
 
   //Components
@@ -19,6 +21,9 @@ const test = baseTest.extend<{
   locationViews: LocationViews;
 
 }>({
+  basePage: async ({ page }, use) => {
+    await use(new BasePage(page))
+  },
   homepage: async ({ page }, use) => {
     await use(new HomePage(page))
   },
