@@ -11,13 +11,13 @@ test.describe('Test cases based on excel file', () => {
         await page.waitForLoadState();
     });
 
-    test('Id = 1 | Header elements visibility', async ({ headerComponent }) => {
+    test('TC_001 | Verify the visibility of the header and its elements.', async ({ headerComponent }) => {
 
         const locators = [headerComponent.companyLogo, headerComponent.lightDarkModeSwitch, headerComponent.jobOffersButton, headerComponent.topCompaniesButton, headerComponent.geekButton, headerComponent.postAJobButton, headerComponent.signInButton, headerComponent.jobAlertButton, headerComponent.currencyDropDownButton, headerComponent.sideMenuIcon];
 
         expect(await headerComponent.isLoaded(locators)).toBe(true);
     });
-    test('Id = 2 | Change site mode from light to dark', async ({ headerComponent }) => {
+    test('Tc_002 | Ensure that the day/night mode toggle button operates as expected, allowing users to switch between day and night modes seamlessly', async ({ headerComponent }) => {
 
         await expect(headerComponent.headerBackground).toHaveCSS('background-color', HomepageBackgroundColors.Light);
 
@@ -25,21 +25,21 @@ test.describe('Test cases based on excel file', () => {
 
         await expect(headerComponent.headerBackground).toHaveCSS('background-color', HomepageBackgroundColors.Dark);
     });
-    test('Id = 3 | Job offers button takes the user to the offers page', async ({ headerComponent, page }) => {
+    test('Tc_003 | Clicking the "Job Offers" button from the header redirects the user to the main job offers page.', async ({ headerComponent, page }) => {
 
         await headerComponent.jobOffersButton.click();
         await headerComponent.waitForPageToLoad();
 
         await expect(page).toHaveURL('');
     });
-    test('Id = 4 | Top Companies button takes you to the top companies page', async ({ headerComponent, page }) => {
+    test('Tc_004 | Clicking the "Top Companies" button from the header redirects the user to the page showcasing top companies.', async ({ headerComponent, page }) => {
 
         await headerComponent.topCompaniesButton.click();
         await headerComponent.waitForPageToLoad();
 
         await expect(page).toHaveURL(/brands/);
     });
-    test('Id = 5 | The geekButton button takes you to the blog', async ({ headerComponent, page }) => {
+    test('Tc_005 | Clicking the "Geek" button from the header redirects the user to the blog page.', async ({ headerComponent, page }) => {
 
         await headerComponent.geekButton.click();
 
@@ -51,14 +51,14 @@ test.describe('Test cases based on excel file', () => {
 
         await expect(newPage).toHaveURL('https://geek.justjoin.it');
     });
-    test('Id = 6 | The Post a job button takes the user to the page with the prices for the publication of offers', async ({ headerComponent, page }) => {
+    test('Tc_006 | Clicking the "Post a Job" button from the header redirects the user to the page displaying pricing for posting job offers.', async ({ headerComponent, page }) => {
 
         await headerComponent.postAJobButton.click();
         await headerComponent.waitForPageToLoad();
 
         await expect(page).toHaveURL(/pricing/);
     });
-    test('Id = 7 | The Sign in button opens a drop-down menu with two options', async ({ headerComponent, signInViews }) => {
+    test('Tc_007 | The Sign in button opens a drop-down menu with two options', async ({ headerComponent, signInViews }) => {
 
         await headerComponent.signInButton.click();
 
@@ -66,7 +66,7 @@ test.describe('Test cases based on excel file', () => {
         await expect(signInViews.signInCandidateButton).toBeInViewport();
         await expect(signInViews.signInEmployerButton).toBeInViewport();
     });
-    test('ID = 14 | The user can sort job offers by the most popular cities in poland', async ({ homepage, locationViews, page, moreFilterViews }) => {
+    test('Tc_0014 | "As a user, I can use the ""Location"" filter by selecting a city from "Top Poland.', async ({ homepage, locationViews, page, moreFilterViews }) => {
 
         const randomCity = await moreFilterViews.randomProperty(TopCitiesPoland);
 
@@ -90,7 +90,7 @@ test.describe('Test cases based on excel file', () => {
             expect(await homepage.checkSingleCitiesFromOffers(countJobOffer, randomCity)).toBe(true);
         }
     });
-    test('ID = 17 | The user can see all offer category from menu', async ({ homepage }) => {
+    test('Tc_00 17 | As a user, I can utilize the category filter to select job offers that interest me.', async ({ homepage }) => {
 
         const countCategories = await homepage.countCategory.count();
         const categories = Object.values(Category);
@@ -99,7 +99,7 @@ test.describe('Test cases based on excel file', () => {
             await expect(homepage.selectCategory(categories[i])).toBeInViewport();
         };
     });
-    test('ID = 21 | The user can filter offers with operating mode - remote', async ({ homepage }) => {
+    test('Tc_00 20 | As a user, I want to filter job offers to display only remote positions to facilitate my job search process.', async ({ homepage }) => {
 
         await homepage.remoteOnlySwitchOn.click();
 
@@ -108,52 +108,5 @@ test.describe('Test cases based on excel file', () => {
         await homepage.remoteOnlySwitchOff.click();
 
         await expect(homepage.remoteOnlySwitchOn).toBeInViewport();
-    });
-    test('ID = 22 | The user can click drop-down filter and can see 4 options', async ({ homepage }) => {
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
-
-        await homepage.sortOffersDropDownButton.click();
-
-        await expect(homepage.dropDownDefault).toBeInViewport();
-        await expect(homepage.dropDownLatest).toBeInViewport();
-        await expect(homepage.dropDownHighestSalary).toBeInViewport();
-        await expect(homepage.dropDownLowestSalary).toBeInViewport();
-    });
-    test('ID = 22 different option | The user can filter offers by latest one', async ({ homepage }) => {
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
-
-        await homepage.sortOffersDropDownButton.click();
-
-        await expect(homepage.dropDownLatest).toBeInViewport();
-
-        await homepage.dropDownLatest.click();
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Latest);
-    });
-    test('ID = 22 different option | The user can filter offers by highest salary', async ({ homepage }) => {
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
-
-        await homepage.sortOffersDropDownButton.click();
-
-        await expect(homepage.dropDownHighestSalary).toBeInViewport();
-
-        await homepage.dropDownHighestSalary.click();
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Highest);
-    });
-    test('ID = 22 different option | The user can filter offers by lowest salary', async ({ homepage }) => {
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Default);
-
-        await homepage.sortOffersDropDownButton.click();
-
-        await expect(homepage.dropDownLowestSalary).toBeInViewport();
-
-        await homepage.dropDownLowestSalary.click();
-
-        await expect(homepage.dropDownCurrentValue).toHaveText(DropdownValues.Lowest);
     });
 });

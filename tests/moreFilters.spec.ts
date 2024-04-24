@@ -13,7 +13,7 @@ test.describe('More filters tests', () => {
 
     });
 
-    test('ID = 18 | Fill all more filters options', async ({ moreFilterViews }) => {
+    test('Tc_00 18 | Fill all more filters options', async ({ moreFilterViews }) => {
 
         const salaryMin = generateRandomSalary(4);
         const salaryMax = generateRandomSalary(5);
