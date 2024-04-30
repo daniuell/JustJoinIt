@@ -46,7 +46,7 @@ export default class HomePage {
     this.page = page;
   };
 
-  async openMoreFilterViews() {
+  async openmoreFilterView() {
     await this.moreFiltersButton.click();
   };
 
