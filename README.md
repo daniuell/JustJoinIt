@@ -22,7 +22,7 @@
    USER_PASSWORD_CORRECT="CORRECT PASSWORD"
    USER_LOGIN_INCORRECT = "INCORRECT LOGIN"
    USER_PASSWORD_INCORRECT = "INCORRECT PASSWORD"
-   ```****
+   ```
 6. Run test: Run the following command in your terminal:
     ```sh
    npx playwright test
