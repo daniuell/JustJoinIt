@@ -72,7 +72,7 @@ test.describe('Test cases based on excel file', () => {
         await expect(signInViews.signInEmployerButton).toBeInViewport();
     });
     test('Tc_008 | Login with correct email and password', async ({ headerComponent, signInViews, loginPage, page }) => {
-        
+
         await headerComponent.signInButton.click();
 
         await expect(signInViews.signInDropDownMenu).toBeInViewport();
@@ -109,6 +109,26 @@ test.describe('Test cases based on excel file', () => {
         await expect(loginPage.loginErrorText).toHaveText(LoginValidation.LoginErrorText);
     });
     test('Tc_010 | Login with incorrect password', async ({ headerComponent, signInViews, loginPage, page }) => {
+
+        await headerComponent.signInButton.click();
+
+        await expect(signInViews.signInDropDownMenu).toBeInViewport();
+        await expect(signInViews.signInCandidateButton).toBeInViewport();
+        await expect(signInViews.signInEmployerButton).toBeInViewport();
+
+        await signInViews.signInCandidateButton.click();
+
+        await expect(page).toHaveURL("https://profile.justjoin.it/login");
+
+        await loginPage.signInWithEmailButton.click();
+        await loginPage.loginAsUser(CorrectUser.login, IncorrectUser.password);
+
+        await expect(loginPage.errorWindow).toBeInViewport();
+        await expect(loginPage.errowWindowHeaderTitle).toBeInViewport();
+        await expect(loginPage.errowWindowParagraphText).toBeInViewport();
+        await expect(loginPage.errorWindow).not.toBeInViewport({ timeout: 6000 });
+    });
+    test('Tc_011 | "Clicking the "PLN" button from the header opens a dropdown menu with options:PLN, EUR, USD, GBP, CHF, DEF', async ({ headerComponent, signInViews, loginPage, page }) => {
 
         await headerComponent.signInButton.click();
 
