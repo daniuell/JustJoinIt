@@ -1,4 +1,4 @@
-### Installation
+ ### Installation
 
 1. Clone the repo
    ```sh
@@ -16,17 +16,17 @@
    ```sh
    npx playwright install
    ```
-5. Run test: Run the following command in your terminal:
-    ```sh
-   npx playwright test
-   ```
-6. Configure test data: Find .env file and add your login credentials for the JustJoinIt portal
+5. Configure test data: Find .env file and add your login credentials for the JustJoinIt portal
     ```sh
    USER_LOGIN_CORRECT="CORRECT LOGIN"
    USER_PASSWORD_CORRECT="CORRECT PASSWORD"
    USER_LOGIN_INCORRECT = "INCORRECT LOGIN"
    USER_PASSWORD_INCORRECT = "INCORRECT PASSWORD"
    ```****
+6. Run test: Run the following command in your terminal:
+    ```sh
+   npx playwright test
+   ```
     
 ### Test cases
 Tests are created based on test cases, which can be found here : 
