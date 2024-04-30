@@ -4,6 +4,13 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
+  env:
+  USER_LOGIN_CORRECT: ${{ secrets.USER_LOGIN_CORRECT }}
+  USER_PASSWORD_CORRECT: ${{ secrets.USER_PASSWORD_CORRECT }}
+  USER_LOGIN_INCORRECT: ${{ secrets.USER_LOGIN_INCORRECT }}
+  USER_PASSWORD_INCORRECT: ${{ secrets.USER_PASSWORD_INCORRECT }}
+  
 jobs:
   test:
     timeout-minutes: 60
@@ -17,6 +24,14 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+      -Prepare test data
+      name: Prepare test data
+      run: |
+        echo "export USER_LOGIN_CORRECT='${USER_LOGIN_CORRECT}'" >> $GITHUB_ENV
+        echo "export USER_PASSWORD_CORRECT='${USER_PASSWORD_CORRECT}'" >> $GITHUB_ENV
+        echo "export USER_LOGIN_INCORRECT='${USER_LOGIN_INCORRECT}'" >> $GITHUB_ENV
+        echo "export USER_PASSWORD_INCORRECT='${USER_PASSWORD_INCORRECT}'" >> $GITHUB_ENV
+    - name: Run Playwright tests
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v3
