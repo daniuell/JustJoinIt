@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ main, master ]
 
-  env:
+env:
   USER_LOGIN_CORRECT: ${{ secrets.USER_LOGIN_CORRECT }}
   USER_PASSWORD_CORRECT: ${{ secrets.USER_PASSWORD_CORRECT }}
   USER_LOGIN_INCORRECT: ${{ secrets.USER_LOGIN_INCORRECT }}
