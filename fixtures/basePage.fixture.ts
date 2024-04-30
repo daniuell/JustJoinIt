@@ -1,17 +1,18 @@
 import HeaderComponent from '../pageObject/components/headerComponent';
 import HomePage from '../pageObject/homePage';
 import CookiesViews from '../pageObject/views/cookiesViews';
-
 import { test as baseTest } from '@playwright/test';
 import MoreFilterViews from '../pageObject/views/filter/moreFilterViews';
 import LocationViews from '../pageObject/views/filter/locationViews';
 import BasePage from '../pageObject/basePage';
 import SignInViews from '../pageObject/views/header/signInViews';
+import LoginPage from '../pageObject/loginPage';
 
 const test = baseTest.extend<{
 
   basePage: BasePage;
   homepage: HomePage;
+  loginPage: LoginPage;
 
   //Components
   headerComponent: HeaderComponent;
@@ -28,6 +29,9 @@ const test = baseTest.extend<{
   },
   homepage: async ({ page }, use) => {
     await use(new HomePage(page))
+  },
+  loginPage: async ({ page }, use) => {
+    await use(new LoginPage(page))
   },
 
   //Components

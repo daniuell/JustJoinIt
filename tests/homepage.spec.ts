@@ -1,7 +1,8 @@
-import { expect } from '@playwright/test';
+import { Locator, expect } from '@playwright/test';
 import test from '../fixtures/basePage.fixture'
-import { Category, DropdownValues, HomepageBackgroundColors } from '../enums/homepage';
+import { Category, HomepageBackgroundColors } from '../enums/homepage';
 import { TopCitiesPoland, CitiesRelatedToSilesia, CitiesRelatedToTricity } from '../enums/locationForm';
+require('dotenv').config();
 
 test.describe('Test cases based on excel file', () => {
 
@@ -13,9 +14,10 @@ test.describe('Test cases based on excel file', () => {
 
     test('TC_001 | Verify the visibility of the header and its elements.', async ({ headerComponent }) => {
 
-        const locators = [headerComponent.companyLogo, headerComponent.lightDarkModeSwitch, headerComponent.jobOffersButton, headerComponent.topCompaniesButton, headerComponent.geekButton, headerComponent.postAJobButton, headerComponent.signInButton, headerComponent.jobAlertButton, headerComponent.currencyDropDownButton, headerComponent.sideMenuIcon];
+        const locators: Locator[] = headerComponent.locatorsAreLoaded;
 
-        expect(await headerComponent.isLoaded(locators)).toBe(true);
+        expect(await Promise.all(locators.map(async (locator) => await expect(locator).toBeInViewport())));
+
     });
     test('Tc_002 | Ensure that the day/night mode toggle button operates as expected, allowing users to switch between day and night modes seamlessly', async ({ headerComponent }) => {
 
@@ -65,6 +67,27 @@ test.describe('Test cases based on excel file', () => {
         await expect(signInViews.signInDropDownMenu).toBeInViewport();
         await expect(signInViews.signInCandidateButton).toBeInViewport();
         await expect(signInViews.signInEmployerButton).toBeInViewport();
+    });
+    test('Tc_008 | Login with correct email and password', async ({ headerComponent, signInViews, loginPage, page }) => {
+
+        const login = process.env.USER_LOGIN;
+        const password = process.env.USER_PASSWORD;
+
+        await headerComponent.signInButton.click();
+
+        await expect(signInViews.signInDropDownMenu).toBeInViewport();
+        await expect(signInViews.signInCandidateButton).toBeInViewport();
+        await expect(signInViews.signInEmployerButton).toBeInViewport();
+
+        await signInViews.signInCandidateButton.click();
+
+        await expect(page).toHaveURL("https://profile.justjoin.it/login");
+
+        await loginPage.signInWithEmailButton.click();
+        await loginPage.loginAsUser(login, password);
+
+        await expect(page).toHaveURL("https://profile.justjoin.it/profile");
+
     });
     test('Tc_0014 | "As a user, I can use the ""Location"" filter by selecting a city from "Top Poland.', async ({ homepage, locationViews, page, moreFilterViews }) => {
 
