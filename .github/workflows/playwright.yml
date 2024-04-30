@@ -25,12 +25,6 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Prepare test data
-        run: |
-          echo "export USER_LOGIN_CORRECT='${USER_LOGIN_CORRECT}'" >> $GITHUB_ENV
-          echo "export USER_PASSWORD_CORRECT='${USER_PASSWORD_CORRECT}'" >> $GITHUB_ENV
-          echo "export USER_LOGIN_INCORRECT='${USER_LOGIN_INCORRECT}'" >> $GITHUB_ENV
-          echo "export USER_PASSWORD_INCORRECT='${USER_PASSWORD_INCORRECT}'" >> $GITHUB_ENV
       - name: Run Playwright tests
         run: npx playwright test
       - uses: actions/upload-artifact@v3
