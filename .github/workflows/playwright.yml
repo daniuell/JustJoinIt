@@ -25,7 +25,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
       -Prepare test data
-      name: Prepare test data
+    - name: Prepare test data
       run: |
         echo "export USER_LOGIN_CORRECT='${USER_LOGIN_CORRECT}'" >> $GITHUB_ENV
         echo "export USER_PASSWORD_CORRECT='${USER_PASSWORD_CORRECT}'" >> $GITHUB_ENV
