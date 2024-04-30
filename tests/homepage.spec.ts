@@ -130,9 +130,9 @@ test.describe('Test cases based on excel file', () => {
     });
     test('Tc_011 | "Clicking the "PLN" button from the header opens a dropdown menu with options:PLN, EUR, USD, GBP, CHF, DEF', async ({ headerComponent, currencyDropdownView }) => {
 
-        await headerComponent.currencyDropDownButton.click();
-
         const locators: Locator[] = currencyDropdownView.availableCurrencies;
+
+        await headerComponent.currencyDropDownButton.click();
 
         expect(await Promise.all(locators.map(async (locator) => await expect(locator).toBeInViewport())));
     });
