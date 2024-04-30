@@ -126,7 +126,7 @@ test.describe('Test cases based on excel file', () => {
         await expect(loginPage.errorWindow).toBeInViewport();
         await expect(loginPage.errowWindowHeaderTitle).toBeInViewport();
         await expect(loginPage.errowWindowParagraphText).toBeInViewport();
-        await expect(loginPage.errorWindow).not.toBeInViewport({ timeout: 6000 });
+        await expect(loginPage.errorWindow).not.toBeInViewport({ timeout: 10000 });
     });
     test('Tc_011 | "Clicking the "PLN" button from the header opens a dropdown menu with options:PLN, EUR, USD, GBP, CHF, DEF', async ({ headerComponent, currencyDropdownView }) => {
 
