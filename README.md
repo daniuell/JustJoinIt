@@ -20,6 +20,13 @@
     ```sh
    npx playwright test
    ```
+6. Configure test data: Find .env file and add your login credentials for the JustJoinIt portal
+    ```sh
+   USER_LOGIN_CORRECT="CORRECT LOGIN"
+   USER_PASSWORD_CORRECT="CORRECT PASSWORD"
+   USER_LOGIN_INCORRECT = "INCORRECT LOGIN"
+   USER_PASSWORD_INCORRECT = "INCORRECT PASSWORD"
+   ```****
     
 ### Test cases
 Tests are created based on test cases, which can be found here : 
