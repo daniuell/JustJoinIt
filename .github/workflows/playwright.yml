@@ -16,11 +16,6 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    env:
-      USER_LOGIN_CORRECT: ${{ secrets.USER_LOGIN_CORRECT }}
-      USER_PASSWORD_CORRECT: ${{ secrets.USER_PASSWORD_CORRECT }}
-      USER_LOGIN_INCORRECT: ${{ secrets.USER_LOGIN_INCORRECT }}
-      USER_PASSWORD_INCORRECT: ${{ secrets.USER_PASSWORD_INCORRECT }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
