@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test'
 import BasePage from '../basePage';
 
-export default class CookiesViews extends BasePage {
+export default class CookiesView extends BasePage {
 
   acceptCookiesButton = this.page.getByRole('button', { name: 'Accept all' });
   customizeCookiesButton = this.page.getByRole('button', { name: 'Customize' });

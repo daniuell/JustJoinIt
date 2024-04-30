@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test'
 import { SelectEmployment, SelectExperience, SelectTypeOfWork } from '../../../enums/moreFilters';
 
-export default class MoreFilterViews {
+export default class MoreFilterView {
 
   //More filters views
   moreFilters = this.page.locator('[role="dialog"]')

@@ -13,15 +13,26 @@ export default class HomePage {
   countCategory = this.page.locator('//a[contains(@class,"offer_list_category_link")]');
 
   //Offers 
-  offersWithSalaryButton = this.page.getByRole('button', { name: "Offers with salary" });
+  offersWithSalaryButton = this.page.locator('//button[contains(@id,"T-salaryOnly")]');
   allOffersButton = this.page.locator('//button[contains(@id,"-allOffers")]');
+
+  //Remote offers switch
   remoteOnlySwitchOn = this.page.locator('//span[contains(@class,"MuiSwitch-sizeSmall")]//input[@type="checkbox"]');
   remoteOnlySwitchOff = this.page.locator('//span[contains(@class,"Mui-checked")]');
 
+  //City from offers
   offerCityCount = this.page.locator('//*[@data-testid="PlaceOutlinedIcon"]//..//div/span[1]');
   offerCity(index: number) { return this.page.locator(`(//*[@data-testid="PlaceOutlinedIcon"]//..//div/span[1])[${index}]`) };
+
+  //Selected city from location(pattern: Work: location name)
   offerMenuWorkTitle = this.page.locator("//div[contains(@class,'MuiBox-root')]//span[text()='Work: ']")
   offerMenuWorkInCity(city: string) { return this.page.locator(`//div[contains(@class,"MuiBox-root")]//span[text()="Work: "]//following-sibling::span[text()="${city}"]`) };
+
+  //Salary from offers
+  offerSalaryRangeMin = this.page.locator('//*[@data-test-id="virtuoso-item-list"]//h2//..//div/span[position() mod 3 = 1]')
+  offerSalaryRangeMax = this.page.locator('//*[@data-test-id="virtuoso-item-list"]//h2//..//div/span[position() mod 3 = 2]')
+  offerSalaryRangeCurrencyCount = this.page.locator('//*[@data-test-id="virtuoso-item-list"]//h2//..//div/span[position() mod 3 = 0]')
+  offerSalaryRangeCurrency(index: number) { return this.page.locator(`(//*[@data-test-id="virtuoso-item-list"]//h2//..//div/span[position() mod 3 = 0])[${index}]`) }
 
   //Drop-down filter 
   sortOffersDropDownButton = this.page.locator('[name="sort_filter_button"]');
@@ -35,7 +46,7 @@ export default class HomePage {
     this.page = page;
   };
 
-  async openMoreFilterViews() {
+  async openmoreFilterView() {
     await this.moreFiltersButton.click();
   };
 
@@ -74,4 +85,5 @@ export default class HomePage {
   async allElementsAreTrue(array: boolean[]) {
     return array.every(value => value === true);
   };
+
 };

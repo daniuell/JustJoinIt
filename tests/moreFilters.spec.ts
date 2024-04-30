@@ -5,50 +5,49 @@ import { SelectEmployment, SelectExperience, SelectTypeOfWork } from '../enums/m
 
 test.describe('More filters tests', () => {
 
-    test.beforeEach(async ({ page, cookiesViews, homepage }) => {
+    test.beforeEach(async ({ page, cookiesView, homepage }) => {
 
         await page.goto('');
-        await cookiesViews.acceptCookies();
-        await homepage.openMoreFilterViews();
-
+        await cookiesView.acceptCookies();
+        await homepage.openmoreFilterView();
     });
 
-    test('Tc_00 18 | Fill all more filters options', async ({ moreFilterViews }) => {
+    test('Tc_00 18 | Fill all more filters options', async ({ moreFilterView }) => {
 
         const salaryMin = generateRandomSalary(4);
         const salaryMax = generateRandomSalary(5);
-        const randomExperience = await moreFilterViews.randomProperty(SelectExperience);
-        const randomEmployment = await moreFilterViews.randomProperty(SelectEmployment);
-        const randomTypeOfWork = await moreFilterViews.randomProperty(SelectTypeOfWork);
+        const randomExperience = await moreFilterView.randomProperty(SelectExperience);
+        const randomEmployment = await moreFilterView.randomProperty(SelectEmployment);
+        const randomTypeOfWork = await moreFilterView.randomProperty(SelectTypeOfWork);
 
-        await expect(moreFilterViews.moreFilters).toBeInViewport();
+        await expect(moreFilterView.moreFilters).toBeInViewport();
 
-        await moreFilterViews.fillMinMaxSalary(salaryMin, salaryMax);
+        await moreFilterView.fillMinMaxSalary(salaryMin, salaryMax);
 
-        await expect(moreFilterViews.salaryMinInput).toHaveValue(salaryMin);
-        await expect(moreFilterViews.salaryMinInput).toHaveValue(salaryMin);
-        await expect(moreFilterViews.friendlyOfferTurnedOff).toBeInViewport();
+        await expect(moreFilterView.salaryMinInput).toHaveValue(salaryMin);
+        await expect(moreFilterView.salaryMinInput).toHaveValue(salaryMin);
+        await expect(moreFilterView.friendlyOfferTurnedOff).toBeInViewport();
 
 
-        await moreFilterViews.checkFriendlyOffer();
+        await moreFilterView.checkFriendlyOffer();
 
-        await expect(moreFilterViews.friendlyOfferTurnedOn).toBeInViewport();
+        await expect(moreFilterView.friendlyOfferTurnedOn).toBeInViewport();
 
-        await moreFilterViews.selectExperience(randomExperience);
+        await moreFilterView.selectExperience(randomExperience);
 
-        await expect(moreFilterViews.experience(randomExperience)).toBeChecked();
+        await expect(moreFilterView.experience(randomExperience)).toBeChecked();
 
-        await moreFilterViews.selectEmployment(randomEmployment);
+        await moreFilterView.selectEmployment(randomEmployment);
 
-        await expect(moreFilterViews.employment(randomEmployment)).toBeChecked();
+        await expect(moreFilterView.employment(randomEmployment)).toBeChecked();
 
-        await moreFilterViews.selectWorkType(randomTypeOfWork);
+        await moreFilterView.selectWorkType(randomTypeOfWork);
 
-        await expect(moreFilterViews.workType(randomTypeOfWork)).toBeChecked();
+        await expect(moreFilterView.workType(randomTypeOfWork)).toBeChecked();
 
-        await moreFilterViews.showOfferButton.click();
+        await moreFilterView.showOfferButton.click();
 
-        await expect(moreFilterViews.moreFilters).not.toBeInViewport();
+        await expect(moreFilterView.moreFilters).not.toBeInViewport();
     });
 });
 

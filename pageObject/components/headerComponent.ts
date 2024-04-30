@@ -14,7 +14,7 @@ export default class HeaderComponent extends BasePage {
 
   postAJobButton = this.page.locator('//header//div[text()="Post a job"]');
   jobAlertButton = this.page.locator('[name="header_job_alerts_button"]');
-  currencyDropDownButton = this.page.locator('//header//button[@data-sp-button-label="icon-button"]').nth(2);
+  currencyDropDownButton = this.page.locator('//header//button[@data-sp-button-label="icon-button"]').nth(1);
   currencyDropDownTitle = this.page.getByRole('heading', { name: "Select your currency" });
   sideMenuIcon = this.page.locator('//header//*[@name="sidebar-open"]');
 
