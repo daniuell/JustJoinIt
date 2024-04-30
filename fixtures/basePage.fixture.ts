@@ -1,12 +1,13 @@
 import HeaderComponent from '../pageObject/components/headerComponent';
 import HomePage from '../pageObject/homePage';
-import CookiesViews from '../pageObject/views/cookiesViews';
+import CookiesView from '../pageObject/views/cookiesView';
 import { test as baseTest } from '@playwright/test';
-import MoreFilterViews from '../pageObject/views/filter/moreFilterViews';
-import LocationViews from '../pageObject/views/filter/locationViews';
+import MoreFilterView from '../pageObject/views/filter/moreFilterView';
+import LocationView from '../pageObject/views/filter/locationView';
 import BasePage from '../pageObject/basePage';
-import SignInViews from '../pageObject/views/header/signInViews';
+import SignInView from '../pageObject/views/header/signInView';
 import LoginPage from '../pageObject/loginPage';
+import CurrencyDropdownView from '../pageObject/views/header/currencyDropdownView';
 
 const test = baseTest.extend<{
 
@@ -18,10 +19,11 @@ const test = baseTest.extend<{
   headerComponent: HeaderComponent;
 
   //Views
-  moreFilterViews: MoreFilterViews;
-  cookiesViews: CookiesViews;
-  locationViews: LocationViews;
-  signInViews: SignInViews;
+  moreFilterView: MoreFilterView;
+  cookiesView: CookiesView;
+  locationView: LocationView;
+  signInView: SignInView;
+  currencyDropdownView: CurrencyDropdownView;
 
 }>({
   basePage: async ({ page }, use) => {
@@ -40,17 +42,20 @@ const test = baseTest.extend<{
   },
 
   //Views
-  cookiesViews: async ({ page }, use) => {
-    await use(new CookiesViews(page))
+  cookiesView: async ({ page }, use) => {
+    await use(new CookiesView(page))
   },
-  moreFilterViews: async ({ page }, use) => {
-    await use(new MoreFilterViews(page))
+  moreFilterView: async ({ page }, use) => {
+    await use(new MoreFilterView(page))
   },
-  locationViews: async ({ page }, use) => {
-    await use(new LocationViews(page))
+  locationView: async ({ page }, use) => {
+    await use(new LocationView(page))
   },
-  signInViews: async ({ page }, use) => {
-    await use(new SignInViews(page))
+  signInView: async ({ page }, use) => {
+    await use(new SignInView(page))
+  },
+  currencyDropdownView: async ({ page }, use) => {
+    await use(new CurrencyDropdownView(page))
   },
 });
 

@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test'
 
-export default class LocationViews {
+export default class LocationView {
 
 	locationForm = this.page.locator('[id="filters-location-modal-form"]');
 	addressInputField = this.page.locator('[placeholder="Where do you want to work?"]');

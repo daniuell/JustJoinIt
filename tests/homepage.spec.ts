@@ -1,6 +1,6 @@
 import { Locator, expect } from '@playwright/test';
 import test from '../fixtures/basePage.fixture'
-import { Category, HomepageBackgroundColors } from '../enums/homepage';
+import { Category, CurrenciesValues, HomepageBackgroundColors } from '../enums/homepage';
 import { TopCitiesPoland, CitiesRelatedToSilesia, CitiesRelatedToTricity } from '../enums/locationForm';
 import { LoginValidation } from '../enums/login';
 import { IncorrectUser, CorrectUser } from '../testData/testData';
@@ -9,9 +9,9 @@ require('dotenv').config();
 
 test.describe('Test cases based on excel file', () => {
 
-    test.beforeEach(async ({ page, cookiesViews }) => {
+    test.beforeEach(async ({ page, cookiesView }) => {
         await page.goto('');
-        await cookiesViews.acceptCookies();
+        await cookiesView.acceptCookies();
         await page.waitForLoadState();
     });
 
@@ -63,23 +63,23 @@ test.describe('Test cases based on excel file', () => {
 
         await expect(page).toHaveURL(/pricing/);
     });
-    test('Tc_007 | The Sign in button opens a drop-down menu with two options', async ({ headerComponent, signInViews }) => {
+    test('Tc_007 | The Sign in button opens a drop-down menu with two options', async ({ headerComponent, signInView }) => {
 
         await headerComponent.signInButton.click();
 
-        await expect(signInViews.signInDropDownMenu).toBeInViewport();
-        await expect(signInViews.signInCandidateButton).toBeInViewport();
-        await expect(signInViews.signInEmployerButton).toBeInViewport();
+        await expect(signInView.signInDropDownMenu).toBeInViewport();
+        await expect(signInView.signInCandidateButton).toBeInViewport();
+        await expect(signInView.signInEmployerButton).toBeInViewport();
     });
-    test('Tc_008 | Login with correct email and password', async ({ headerComponent, signInViews, loginPage, page }) => {
+    test('Tc_008 | Login with correct email and password', async ({ headerComponent, signInView, loginPage, page }) => {
 
         await headerComponent.signInButton.click();
 
-        await expect(signInViews.signInDropDownMenu).toBeInViewport();
-        await expect(signInViews.signInCandidateButton).toBeInViewport();
-        await expect(signInViews.signInEmployerButton).toBeInViewport();
+        await expect(signInView.signInDropDownMenu).toBeInViewport();
+        await expect(signInView.signInCandidateButton).toBeInViewport();
+        await expect(signInView.signInEmployerButton).toBeInViewport();
 
-        await signInViews.signInCandidateButton.click();
+        await signInView.signInCandidateButton.click();
 
         await expect(page).toHaveURL("https://profile.justjoin.it/login");
 
@@ -89,15 +89,15 @@ test.describe('Test cases based on excel file', () => {
         await expect(page).toHaveURL("https://profile.justjoin.it/profile");
 
     });
-    test('Tc_009 | Login with incorrect email', async ({ headerComponent, signInViews, loginPage, page }) => {
+    test('Tc_009 | Login with incorrect email', async ({ headerComponent, signInView, loginPage, page }) => {
 
         await headerComponent.signInButton.click();
 
-        await expect(signInViews.signInDropDownMenu).toBeInViewport();
-        await expect(signInViews.signInCandidateButton).toBeInViewport();
-        await expect(signInViews.signInEmployerButton).toBeInViewport();
+        await expect(signInView.signInDropDownMenu).toBeInViewport();
+        await expect(signInView.signInCandidateButton).toBeInViewport();
+        await expect(signInView.signInEmployerButton).toBeInViewport();
 
-        await signInViews.signInCandidateButton.click();
+        await signInView.signInCandidateButton.click();
 
         await expect(page).toHaveURL("https://profile.justjoin.it/login");
 
@@ -108,15 +108,15 @@ test.describe('Test cases based on excel file', () => {
         await expect(loginPage.loginInputError).toHaveCSS('color', LoginValidation.LoginErrorInputColor);
         await expect(loginPage.loginErrorText).toHaveText(LoginValidation.LoginErrorText);
     });
-    test('Tc_010 | Login with incorrect password', async ({ headerComponent, signInViews, loginPage, page }) => {
+    test('Tc_010 | Login with incorrect password', async ({ headerComponent, signInView, loginPage, page }) => {
 
         await headerComponent.signInButton.click();
 
-        await expect(signInViews.signInDropDownMenu).toBeInViewport();
-        await expect(signInViews.signInCandidateButton).toBeInViewport();
-        await expect(signInViews.signInEmployerButton).toBeInViewport();
+        await expect(signInView.signInDropDownMenu).toBeInViewport();
+        await expect(signInView.signInCandidateButton).toBeInViewport();
+        await expect(signInView.signInEmployerButton).toBeInViewport();
 
-        await signInViews.signInCandidateButton.click();
+        await signInView.signInCandidateButton.click();
 
         await expect(page).toHaveURL("https://profile.justjoin.it/login");
 
@@ -128,33 +128,53 @@ test.describe('Test cases based on excel file', () => {
         await expect(loginPage.errowWindowParagraphText).toBeInViewport();
         await expect(loginPage.errorWindow).not.toBeInViewport({ timeout: 6000 });
     });
-    test('Tc_011 | "Clicking the "PLN" button from the header opens a dropdown menu with options:PLN, EUR, USD, GBP, CHF, DEF', async ({ headerComponent, signInViews, loginPage, page }) => {
+    test('Tc_011 | "Clicking the "PLN" button from the header opens a dropdown menu with options:PLN, EUR, USD, GBP, CHF, DEF', async ({ headerComponent, currencyDropdownView }) => {
 
-        await headerComponent.signInButton.click();
+        await headerComponent.currencyDropDownButton.click();
 
-        await expect(signInViews.signInDropDownMenu).toBeInViewport();
-        await expect(signInViews.signInCandidateButton).toBeInViewport();
-        await expect(signInViews.signInEmployerButton).toBeInViewport();
+        const locators: Locator[] = currencyDropdownView.availableCurrencies;
 
-        await signInViews.signInCandidateButton.click();
-
-        await expect(page).toHaveURL("https://profile.justjoin.it/login");
-
-        await loginPage.signInWithEmailButton.click();
-        await loginPage.loginAsUser(CorrectUser.login, IncorrectUser.password);
-
-        await expect(loginPage.errorWindow).toBeInViewport();
-        await expect(loginPage.errowWindowHeaderTitle).toBeInViewport();
-        await expect(loginPage.errowWindowParagraphText).toBeInViewport();
-        await expect(loginPage.errorWindow).not.toBeInViewport({ timeout: 6000 });
+        expect(await Promise.all(locators.map(async (locator) => await expect(locator).toBeInViewport())));
     });
-    test('Tc_015 | "As a user, I can use the ""Location"" filter by selecting a city from "Top Poland.', async ({ homepage, locationViews, page, moreFilterViews }) => {
+    test('Tc_012 | "The user can change the conversion of offers into other currencies', async ({ homepage, headerComponent, currencyDropdownView, page }) => {
 
-        const randomCity = await moreFilterViews.randomProperty(TopCitiesPoland);
+        await homepage.offersWithSalaryButton.click();
+
+        const locators: Locator[] = currencyDropdownView.availableCurrencies;
+        const currencies = Object.values(CurrenciesValues);
+        const countOffers = await homepage.offerSalaryRangeCurrencyCount.count();
+        let currenciesCounter = 0;
+
+        for (let i = 0; i < locators.length; i++) {
+            await headerComponent.currencyDropDownButton.click();
+            await locators[i].click({ delay: 500 });
+            await page.waitForLoadState("networkidle");
+
+
+            for (let n = 1; n < countOffers; n++) {
+                if (currenciesCounter === 5) {
+                    const salaryCurrency = await homepage.offerSalaryRangeCurrency(n).textContent();
+                    const containsOneOfTheCurrency = currencies.filter(value => value === salaryCurrency).length === 1;
+
+                    expect(containsOneOfTheCurrency).toBe(true);
+                }
+                else {
+                    const salaryCurrency = await homepage.offerSalaryRangeCurrency(n).textContent();
+
+                    expect(salaryCurrency).toBe(currencies[currenciesCounter]);
+                }
+            };
+            currenciesCounter += 1;
+        };
+    });
+
+    test('Tc_015 | "As a user, I can use the ""Location"" filter by selecting a city from "Top Poland.', async ({ homepage, locationView, page, moreFilterView }) => {
+
+        const randomCity = await moreFilterView.randomProperty(TopCitiesPoland);
 
         await homepage.location.click();
-        await locationViews.selectCityFromFilter(randomCity);
-        await locationViews.showOffersButton.click();
+        await locationView.selectCityFromFilter(randomCity);
+        await locationView.showOffersButton.click();
         await page.waitForLoadState('networkidle');
 
         await expect(homepage.offerMenuWorkTitle).toBeInViewport();

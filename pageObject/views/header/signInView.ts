@@ -1,6 +1,6 @@
 import { Page } from "@playwright/test";
 
-export default class SignInViews {
+export default class SignInView {
 
   signInDropDownMenu = this.page.locator('//ul[@role="menu"]');
   signInCandidateButton = this.page.locator('//ul[@role="menu"]//*[@role="menuitem"]').first();
