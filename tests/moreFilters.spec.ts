@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import test from '../fixtures/basePage.fixture'
-import { generateRandomSalary } from '../tools/utils';
+import { generateRandomSalary, randomProperty } from '../tools/utils';
 import { SelectEmployment, SelectExperience, SelectTypeOfWork } from '../enums/moreFilters';
 
 test.describe('More filters tests', () => {
@@ -16,9 +16,9 @@ test.describe('More filters tests', () => {
 
         const salaryMin = generateRandomSalary(4);
         const salaryMax = generateRandomSalary(5);
-        const randomExperience = await moreFilterView.randomProperty(SelectExperience);
-        const randomEmployment = await moreFilterView.randomProperty(SelectEmployment);
-        const randomTypeOfWork = await moreFilterView.randomProperty(SelectTypeOfWork);
+        const randomExperience = await randomProperty(SelectExperience);
+        const randomEmployment = await randomProperty(SelectEmployment);
+        const randomTypeOfWork = await randomProperty(SelectTypeOfWork);
 
         await expect(moreFilterView.moreFilters).toBeInViewport();
 
