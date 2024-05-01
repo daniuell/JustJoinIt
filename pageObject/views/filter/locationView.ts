@@ -14,7 +14,7 @@ export default class LocationView {
 	};
 
 	async selectCityFromFilter(city: string) {
-
 		await this.topLocations(city).click();
 	};
+	
 };

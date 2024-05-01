@@ -1,7 +1,7 @@
 import { Locator, expect } from '@playwright/test';
 import test from '../fixtures/basePage.fixture'
 import { Category, HomepageBackgroundColors } from '../enums/homepage';
-import { TopCitiesPoland, CitiesRelatedToSilesia, CitiesRelatedToTricity } from '../enums/locationForm';
+import { TopCitiesPoland, CitiesRelatedToSilesia, CitiesRelatedToTricity, TopCitiesWorld, OtherLocations } from '../enums/locationForm';
 import { LoginValidation } from '../enums/login';
 import { IncorrectUser, CorrectUser } from '../testData/testData';
 import { CurrenciesValues } from '../enums/header';
@@ -217,6 +217,55 @@ test.describe('Test cases based on excel file', () => {
         else {
             expect(await homepage.checkSingleCitiesFromOffers(countJobOffer, randomCity)).toBe(true);
         }
+    });
+    test('Tc_016 | "As a user, I can use the "Location" filter by selecting a city from "Top World.', async ({ homepage, locationView, page, }) => {
+
+        let randomCity = await randomProperty(TopCitiesWorld);
+
+        await homepage.location.click();
+        await locationView.selectCityFromFilter(randomCity);
+        await locationView.showOffersButton.click();
+        await page.waitForLoadState('networkidle');
+
+        if (await homepage.noOfferForSelectedCity.isVisible() === true) {
+            await expect(homepage.noOfferForSelectedCity).toBeInViewport();
+        }
+        else {
+            await expect(homepage.offerMenuWorkTitle).toBeInViewport();
+            await expect(homepage.offerMenuWorkInCity(randomCity)).toBeInViewport();
+
+            const countJobOffer = await homepage.offerCityCount.count();
+
+            if (randomCity.includes('-') === true) {
+                randomCity = randomCity.replace('-', ' ');
+            };
+            expect(await homepage.checkMultiCitiesFromOffers(countJobOffer, randomCity)).toBe(true);
+        };
+    });
+    test('Tc_017 | As a user, I can use the "Location" filter by selecting a city from "Other locations."', async ({ homepage, locationView, page, }) => {
+
+        let randomCity = await randomProperty(OtherLocations);
+
+        await homepage.location.click();
+        await locationView.selectCityFromFilter(randomCity);
+        await locationView.showOffersButton.click();
+        await page.waitForLoadState('networkidle');
+
+        if (await homepage.noOfferForSelectedCity.isVisible() === true) {
+            await expect(homepage.noOfferForSelectedCity).toBeInViewport();
+        }
+        else {
+            await expect(homepage.offerMenuWorkTitle).toBeInViewport();
+
+            await expect(homepage.offerMenuWorkInCity(randomCity)).toBeInViewport();
+
+            const countJobOffer = await homepage.offerCityCount.count();
+
+            if (randomCity.includes('-') === true) {
+                randomCity = randomCity.replace('-', ' ');
+            };
+            expect(await homepage.checkMultiCitiesFromOffers(countJobOffer, randomCity)).toBe(true);
+        };
     });
     test('Tc_018 | As a user, I can utilize the category filter to select job offers that interest me.', async ({ homepage }) => {
 
