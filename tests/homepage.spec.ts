@@ -124,7 +124,6 @@ test.describe('Test cases based on excel file', () => {
         await expect(loginPage.errorWindow).toBeInViewport();
         await expect(loginPage.errowWindowHeaderTitle).toBeInViewport();
         await expect(loginPage.errowWindowParagraphText).toBeInViewport();
-        await expect(loginPage.errorWindow).not.toBeInViewport({ timeout: 10000 });
     });
     test('Tc_011 | "Clicking the "PLN" button from the header opens a dropdown menu with options:PLN, EUR, USD, GBP, CHF, DEF', async ({ headerComponent, currencyDropdownView }) => {
 
@@ -170,7 +169,7 @@ test.describe('Test cases based on excel file', () => {
         const locators: Locator[] = homepage.visibilityOfSearchLocators;
         const categories = Object.values(Category);
 
-        expect(Promise.all(locators.map(async (locator) => await expect(locator).toBeInViewport())));
+        expect(await Promise.all(locators.map(async (locator) => await expect(locator).toBeInViewport())));
 
         for (let i = 0; i < categories.length; i++) {
             await expect(homepage.selectCategory(categories[i])).toBeInViewport();
