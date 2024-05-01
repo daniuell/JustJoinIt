@@ -62,9 +62,5 @@ export default class MoreFilterView {
     await this.workType(workType).click();
   };
 
-  async randomProperty(obj: Object) {
-    const keys = Object.keys(obj);
-
-    return obj[keys[keys.length * Math.random() << 0]];
-  };
+  
 };

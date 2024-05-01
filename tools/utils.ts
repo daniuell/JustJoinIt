@@ -10,5 +10,10 @@ export function generateRandomSalary(digits: number): string {
   const convertSalary = randomSalary.toLocaleString('en-US', { minimumIntegerDigits: 1 });
 
   return convertSalary.replace(',', ' ')
-
 }
+
+export async function randomProperty(obj: Object) {
+  const keys = Object.keys(obj);
+
+  return obj[keys[keys.length * Math.random() << 0]];
+};

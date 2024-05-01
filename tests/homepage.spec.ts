@@ -1,9 +1,12 @@
 import { Locator, expect } from '@playwright/test';
 import test from '../fixtures/basePage.fixture'
-import { Category, CurrenciesValues, HomepageBackgroundColors } from '../enums/homepage';
+import { Category, HomepageBackgroundColors } from '../enums/homepage';
 import { TopCitiesPoland, CitiesRelatedToSilesia, CitiesRelatedToTricity } from '../enums/locationForm';
 import { LoginValidation } from '../enums/login';
 import { IncorrectUser, CorrectUser } from '../testData/testData';
+import { CurrenciesValues } from '../enums/header';
+import { randomProperty } from '../tools/utils';
+import { Occupations } from '../enums/search';
 
 test.describe('Test cases based on excel file', () => {
 
@@ -176,10 +179,24 @@ test.describe('Test cases based on excel file', () => {
             await expect(homepage.selectCategory(categories[i])).toBeInViewport();
         };
     });
+    test('Tc_014 | "The user can use filter to utilize the search filter for job searching by keyword', async ({ homepage, searchOccupationView }) => {
 
-    test('Tc_015 | "As a user, I can use the ""Location"" filter by selecting a city from "Top Poland.', async ({ homepage, locationView, page, moreFilterView }) => {
+        const randomOccupation = await randomProperty(Occupations)
+        const locators: Locator[] = searchOccupationView.locators
 
-        const randomCity = await moreFilterView.randomProperty(TopCitiesPoland);
+        await homepage.searchBar.fill(randomOccupation);
+
+        expect(await Promise.all(locators.map(async (locator) => await expect(locator).toBeInViewport())));
+
+        await searchOccupationView.keywordOption.click();
+
+        await expect(searchOccupationView.selectedKeyword).toBeInViewport();
+        await expect(searchOccupationView.selectedKeyword).toHaveText(randomOccupation);
+    });
+
+    test('Tc_015 | "As a user, I can use the "Location" filter by selecting a city from "Top Poland.', async ({ homepage, locationView, page, moreFilterView }) => {
+
+        const randomCity = await randomProperty(TopCitiesPoland);
 
         await homepage.location.click();
         await locationView.selectCityFromFilter(randomCity);

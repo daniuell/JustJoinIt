@@ -8,6 +8,7 @@ import BasePage from '../pageObject/basePage';
 import SignInView from '../pageObject/views/header/signInView';
 import LoginPage from '../pageObject/loginPage';
 import CurrencyDropdownView from '../pageObject/views/header/currencyDropdownView';
+import SearchOccupationView from '../pageObject/views/filter/searchOccupationView';
 
 const test = baseTest.extend<{
 
@@ -24,6 +25,7 @@ const test = baseTest.extend<{
   locationView: LocationView;
   signInView: SignInView;
   currencyDropdownView: CurrencyDropdownView;
+  searchOccupationView: SearchOccupationView
 
 }>({
   basePage: async ({ page }, use) => {
@@ -56,6 +58,9 @@ const test = baseTest.extend<{
   },
   currencyDropdownView: async ({ page }, use) => {
     await use(new CurrencyDropdownView(page))
+  },
+  searchOccupationView: async ({ page }, use) => {
+    await use(new SearchOccupationView(page))
   },
 });
 
