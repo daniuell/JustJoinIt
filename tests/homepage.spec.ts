@@ -102,8 +102,6 @@ test.describe('Test cases based on excel file', () => {
         await loginPage.signInWithEmailButton.click();
         await loginPage.loginAsUser(IncorrectUser.login, IncorrectUser.password);
 
-        await loginPage.signInWithEmailButton.focus();
-        
         await expect(loginPage.loginInputError).toBeInViewport();
         await expect(loginPage.loginInputError).toHaveCSS('color', LoginValidation.LoginErrorInputColor);
         await expect(loginPage.loginErrorText).toHaveText(LoginValidation.LoginErrorText);
@@ -126,6 +124,7 @@ test.describe('Test cases based on excel file', () => {
         await expect(loginPage.errorWindow).toBeInViewport();
         await expect(loginPage.errowWindowHeaderTitle).toBeInViewport();
         await expect(loginPage.errowWindowParagraphText).toBeInViewport();
+        await expect(loginPage.errorWindow).not.toBeInViewport({ timeout: 10000 });
     });
     test('Tc_011 | "Clicking the "PLN" button from the header opens a dropdown menu with options:PLN, EUR, USD, GBP, CHF, DEF', async ({ headerComponent, currencyDropdownView }) => {
 
