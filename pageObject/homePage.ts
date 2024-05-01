@@ -25,6 +25,7 @@ export default class HomePage {
   //City from offers
   offerCityCount = this.page.locator('//*[@data-testid="PlaceOutlinedIcon"]//..//div/span[1]');
   offerCity(index: number) { return this.page.locator(`(//*[@data-testid="PlaceOutlinedIcon"]//..//div/span[1])[${index}]`) };
+  noOfferForSelectedCity = this.page.locator('//p[text()="We did not find any offers for the above search criteria."]');
 
   //Selected city from location(pattern: Work: location name)
   offerMenuWorkTitle = this.page.locator("//div[contains(@class,'MuiBox-root')]//span[text()='Work: ']")
