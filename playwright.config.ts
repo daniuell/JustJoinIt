@@ -5,26 +5,25 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   timeout: 45 * 1000,
-  expect: { timeout: 15_000 },
+  expect: { timeout: 5_000 },
 
   use: {
     trace: 'on-first-retry',
     baseURL: "https://justjoin.it",
     headless: true,
-    viewport: { width: 1920, height: 1080 },
+    video: 'retain-on-failure',
     screenshot: 'only-on-failure'
   },
-
 
   projects: [
     {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        viewport: { width: 1920, height: 1024 },
+        viewport: { width: 1920, height: 1080 },
       },
     }
   ],

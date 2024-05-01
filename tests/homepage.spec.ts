@@ -5,8 +5,6 @@ import { TopCitiesPoland, CitiesRelatedToSilesia, CitiesRelatedToTricity } from 
 import { LoginValidation } from '../enums/login';
 import { IncorrectUser, CorrectUser } from '../testData/testData';
 
-require('dotenv').config();
-
 test.describe('Test cases based on excel file', () => {
 
     test.beforeEach(async ({ page, cookiesView }) => {
@@ -165,6 +163,17 @@ test.describe('Test cases based on excel file', () => {
                 }
             };
             currenciesCounter += 1;
+        };
+    });
+    test('Tc_013 | "Verify the visibility of the filter and its elements.', async ({ homepage }) => {
+
+        const locators: Locator[] = homepage.visibilityOfSearchLocators;
+        const categories = Object.values(Category);
+
+        expect(await Promise.all(locators.map(async (locator) => await expect(locator).toBeInViewport())));
+
+        for (let i = 0; i < categories.length; i++) {
+            await expect(homepage.selectCategory(categories[i])).toBeInViewport();
         };
     });
 
