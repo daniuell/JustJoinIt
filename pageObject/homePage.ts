@@ -12,6 +12,8 @@ export default class HomePage {
   selectCategory(category: string) { return this.page.locator(`//div[contains(@class,"MuiBox")]//a[contains(@href,"${category}") and contains(@class,"offer_list_category_link")]`).last() };
   countCategory = this.page.locator('//a[contains(@class,"offer_list_category_link")]');
 
+  visibilityOfSearchLocators = [this.searchBar, this.location, this.moreFiltersButton];
+
   //Offers 
   offersWithSalaryButton = this.page.locator('//button[contains(@id,"T-salaryOnly")]');
   allOffersButton = this.page.locator('//button[contains(@id,"-allOffers")]');
