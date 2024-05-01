@@ -102,6 +102,8 @@ test.describe('Test cases based on excel file', () => {
         await loginPage.signInWithEmailButton.click();
         await loginPage.loginAsUser(IncorrectUser.login, IncorrectUser.password);
 
+        await loginPage.signInWithEmailButton.focus();
+        
         await expect(loginPage.loginInputError).toBeInViewport();
         await expect(loginPage.loginInputError).toHaveCSS('color', LoginValidation.LoginErrorInputColor);
         await expect(loginPage.loginErrorText).toHaveText(LoginValidation.LoginErrorText);
